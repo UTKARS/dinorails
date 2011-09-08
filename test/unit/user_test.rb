@@ -25,10 +25,15 @@ class UserTest < ActiveSupport::TestCase
       users(:default).destroy
     end
   end
+
+  def test_self_fancy_name
+    name = 'This is my awesome name'
+    assert_equal "Dinosaur Owner #{name}", User.fancy_name(name)
+  end
   
   def test_fancy_name
     user = users(:default)
-    assert_equal "Dinosaur Owner #{users(:default).name}", user.fancy_name
+    assert_equal "Dinosaur Owner #{user.name}", user.fancy_name
   end
   
 end
