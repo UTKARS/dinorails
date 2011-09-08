@@ -26,4 +26,9 @@ class UserTest < ActiveSupport::TestCase
     end
   end
   
+  def test_fancy_name
+    user = users(:default)
+    assert_equal "Dinosaur Owner #{users(:default).name}", user.fancy_name
+  end
+  
 end
