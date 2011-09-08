@@ -10,4 +10,8 @@ class UsersController < ApplicationController
     render :not_found, :status => :not_found
   end
   
+  def new
+    @user = User.new(params[:user])
+  end
+  
 end

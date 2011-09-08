@@ -21,6 +21,13 @@ class UsersControllerTest < ActionController::TestCase
     get :show, :id => 'invalid'
     assert_response :not_found
     assert_template :not_found
+  end
+  
+  def test_get_new
+    get :new
+    assert assigns(:user)
+    assert_response :success
+    assert_template :new
   end  
 
 end
