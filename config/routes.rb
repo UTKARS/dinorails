@@ -1,5 +1,5 @@
 Dinorails::Application.routes.draw do
   
-  resources :users
+  resources :users, :only => [:index, :show]
   
 end
