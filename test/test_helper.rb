@@ -9,5 +9,11 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  def assert_errors_on(model, *attrs)
+    found_attrs = [ ]
+    model.errors.each do |attr, error|
+      found_attrs << attr
+    end
+    assert_equal attrs.flatten.collect(&:to_s).sort, found_attrs.uniq.collect(&:to_s).sort
+  end
 end
