@@ -19,10 +19,8 @@ class UsersControllerTest < ActionController::TestCase
   
   def test_get_show_failure
     get :show, :id => 'invalid'
-    assert_response :redirect
-    assert_redirected_to :action => :index
-    assert flash[:error]
-  end
-  
+    assert_response :not_found
+    assert_template :not_found
+  end  
 
 end
