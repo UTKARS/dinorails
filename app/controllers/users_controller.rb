@@ -18,6 +18,16 @@ class UsersController < ApplicationController
     render
   end
 
+  def create
+    @user = User.new(params[:user])
+    @user.save!
+    flash[:notice] = 'User created'
+    redirect_to :action => :show, :id => @user
+  rescue ActiveRecord::RecordInvalid
+    flash.now[:error] = 'Failed to create user'
+    render :new
+  end
+
 protected
   
   def load_user

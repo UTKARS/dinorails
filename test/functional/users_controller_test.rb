@@ -44,4 +44,22 @@ class UsersControllerTest < ActionController::TestCase
     assert_template :not_found
   end
 
+  def test_creation
+    assert_difference 'User.count' do
+      post :create, :user => { :name => 'Fred Flintstone' }
+      assert_response :redirect
+      assert_redirected_to :action => :show, :id => User.last
+      assert flash[:notice]
+    end
+  end
+
+  def test_creation_failure
+    assert_no_difference 'User.count' do
+      post :create, :user => { }
+      assert_response :success
+      assert_template :new
+      assert flash[:error]
+    end
+  end
+
 end
