@@ -30,4 +30,18 @@ class UsersControllerTest < ActionController::TestCase
     assert_template :new
   end  
 
+  def test_get_edit
+    user = users(:default)
+    get :edit, :id => user
+    assert assigns(:user)
+    assert_response :success
+    assert_template :edit
+  end
+
+  def test_get_edit_failure
+    get :edit, :id => 'invalid'
+    assert_response :not_found
+    assert_template :not_found
+  end
+
 end

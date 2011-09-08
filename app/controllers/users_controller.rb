@@ -1,17 +1,29 @@
 class UsersController < ApplicationController
+
+  before_filter :load_user, :only => [:show, :edit]
   
   def index
     @users = User.all
   end
   
   def show
-    @user = User.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render :not_found, :status => :not_found
+    render
   end
   
   def new
     @user = User.new(params[:user])
+  end
+  
+  def edit
+    render
+  end
+
+protected
+  
+  def load_user
+    @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render :not_found, :status => :not_found
   end
   
 end
