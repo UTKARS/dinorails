@@ -13,7 +13,8 @@
 # rvm
 * mate .rvmrc
 * add the following:
-```ruby
+
+```
 #!/usr/bin/env bash
 
 # This is an RVM Project .rvmrc file, used to automatically load the ruby
