@@ -14,6 +14,7 @@ mate .
 
 # rvm
 Add a .rvmrc file with the following content:
+
 ```
 #!/usr/bin/env bash
 
