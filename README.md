@@ -9,11 +9,11 @@ mate .
 ```
 
 # Gemfile
-* kill everything except rails and sqlite3
-* change rails to 3.1.0
+* Kill everything except rails and sqlite3
+* Change rails to 3.1.0
 
 # rvm
-* Add a .rvmrc file with the following content:
+Add a .rvmrc file with the following content:
 ```
 #!/usr/bin/env bash
 
