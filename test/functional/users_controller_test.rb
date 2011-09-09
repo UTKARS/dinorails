@@ -85,5 +85,15 @@ class UsersControllerTest < ActionController::TestCase
     user.reload
     assert_not_nil user.name
   end
-  
+
+  def test_destroy
+    user = users(:default)
+    assert_difference 'User.count', -1 do
+      delete :destroy, :id => user
+      assert_response :redirect
+      assert_redirected_to :action => :index
+      assert flash[:notice]
+    end
+  end
+    
 end

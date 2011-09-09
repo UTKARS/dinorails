@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :load_user, :only => [:show, :edit, :update]
+  before_filter :load_user, :only => [:show, :edit, :update, :destroy]
   
   def index
     @users = User.all
@@ -34,9 +34,14 @@ class UsersController < ApplicationController
     redirect_to :action => :show, :id => @user
   rescue ActiveRecord::RecordInvalid
     flash.now[:error] = 'Failed to update User'
-    render :action => :edit
+    render :edit
   end
 
+  def destroy
+    @user.destroy
+    flash[:notice] = 'User deleted'
+    redirect_to :action => :index
+  end
 
 protected
   
