@@ -1,8 +1,10 @@
-Initial setup
-     - rails new dinorails
-     - cd dinorails
-     - git init
-     - mate .
+# Dinorails
+
+## Initial setup
+* rails new dinorails
+* cd dinorails
+* git init
+* mate .
 
 Gemfile
      - kill everything except rails and sqlite3
