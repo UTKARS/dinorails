@@ -188,14 +188,29 @@ ActionView::MissingTemplate: Missing template users/not_found, application/not_f
   * "/Users/dess-e/code/rails/dinorails/app/views"
      - add render :new to rescue block, run test, failure
      - add flash.now[:error] = 'Failed to create user' before render :new, run test, pass
-
-
-
-
-
-
-
-
-
-
-
+     update
+     - add test_update
+     - AbstractController::ActionNotFound: The action 'update' could not be found for UsersController
+     - add empty update action to controller
+     - ActionView::MissingTemplate: Missing template users/update, application/update with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
+  * "/Users/dess-e/code/rails/dinorails/app/views"     - need to load the user, and redirect to the user show page, so add :update to the before filter, and redirect_to :action => :show, :id => @user to the update action, run test, failure
+     - add flash[:notice] = 'PRO updated' before the redirect, run test
+     - <"Updated User Name"> expected but was <"Default User">.
+     - add @user.update_attributes!(params[:pro]) as the first line in the update action, run test, pass
+     update (failure)
+     - add test_update_failure
+     - ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
+     - add empty rescue ActiveRecord::RecordInvalid block, run test
+     - ActionView::MissingTemplate: Missing template users/update, application/update with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
+  * "/Users/dess-e/code/rails/dinorails/app/views"
+     - need to redirect instead of adding a template, so add render :edit to the rescue block, run test, failure
+     - add flash.now[:error] = 'Failed to update User' before render in the rescue block, run test, pass
+     destroy
+     - add test_destroy
+     - AbstractController::ActionNotFound: The action 'destroy' could not be found for UsersController
+     - add empty destroy action to controller, run test
+     - ActionView::MissingTemplate: Missing template users/destroy, application/destroy with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
+  * "/Users/dess-e/code/rails/dinorails/app/views"     - need to load user and redirect, so add :destroy to the before filter, and redirect_to :action => :index to the update action, run test, failure
+     - add flash[:notice] = 'User deleted' before the redirect, run test
+     - "User.count" didn't change by -1. <0> expected but was <1>.
+     - add @user.destroy as the first line in the destroy action, run test, pass
