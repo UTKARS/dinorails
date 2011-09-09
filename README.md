@@ -117,6 +117,12 @@ Instance Methods
 * add self.class.fancy_name(self.name) to fancy_name method, run test, pass
 * !!!!CALLBACKS STILL NEEDED!!!!
 
+## Your first solo model
+Time to build a (fully tested!) Dinosaur model based on the following specifications. 
+* a dinosaur has a name and a colour
+* the name is required
+* the colour is required, and must be one of red, blue, green, or magenta
+
 ## Your first controller
 * rails g controller users
 * talk about each of the files created, delete helpers and stuff in asset pipeline?
