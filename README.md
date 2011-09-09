@@ -6,15 +6,14 @@
 * git init
 * mate .
 
-Gemfile
-     - kill everything except rails and sqlite3
+# Gemfile
+* kill everything except rails and sqlite3
+* change rails to 3.1.0
 
-     - change rails to 3.1.0
-
-rvm
-     - mate .rvmrc
-
-     - add the following:
+# rvm
+* mate .rvmrc
+* add the following:
+```ruby
 #!/usr/bin/env bash
 
 # This is an RVM Project .rvmrc file, used to automatically load the ruby
@@ -38,7 +37,7 @@ else
 
 rvm wrapper "$environment_id" textmate
 echo $MY_RUBY_HOME
-
+```
 
      - cd ../
      - cd dinorails
