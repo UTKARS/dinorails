@@ -8,11 +8,11 @@ git init
 mate .
 ```
 
-# Gemfile
+## Gemfile
 * Kill everything except rails and sqlite3
 * Change rails to 3.1.0
 
-# rvm
+## rvm
 Add a .rvmrc file with the following content:
 
 ```
@@ -52,23 +52,24 @@ type yes
 
 Then try ```ruby -v``` and ```rails -v```, and notice that they are the version specified in rvmrc and Gemfile, respectively.
 
-explanation of rvm, ruby version, etc
+## Bundler
+(explanation of bundler and how gems are managed)
 
-Bundler
-     - gem install bundler (because that gem set will not have it)
-     - bundle install
-     explanation of bundler and how gems are managed
+```
+gem install bundler
+bundle install
+```
 
-Starting the app
-     - rails server
-     - navigate to localhost:3000 in your browser, see the app running, wow!
-     - open new terminal tab and cd to where dinorails is
+## Starting the app
+To start the server, run ```rails server``` in the dinorails directory, and navigate to
+* run ```rails server``` in the dinorails directory
+* navigate to localhost:3000 in your browser, see the app running, wow!
 
-Your first model
-     - rails generate model user
-     talk about each of the files created
-     - open user.rb and user_test.rb
-     - add test_creation test, run test
+## Your first model
+* ```rails generate model user```
+* (talk about each of the files created)
+* open user.rb and user_test.rb
+* add test_creation test, run test
      - ActiveRecord::StatementInvalid: Could not find table 'users'
      - rake db:migrate, run test, same error
      - rake db:test:prepare, run test
