@@ -1,19 +1,19 @@
 # Dinorails
 
 ## Initial setup
-* rails new dinorails
-* cd dinorails
-* git init
-* mate .
+```
+rails new dinorails
+cd dinorails
+git init
+mate .
+```
 
 # Gemfile
 * kill everything except rails and sqlite3
 * change rails to 3.1.0
 
 # rvm
-* mate .rvmrc
-* add the following:
-
+* Add a .rvmrc file with the following content:
 ```
 #!/usr/bin/env bash
 
@@ -39,6 +39,7 @@ else
 rvm wrapper "$environment_id" textmate
 echo $MY_RUBY_HOME
 ```
+
 
      - cd ../
      - cd dinorails
