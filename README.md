@@ -117,116 +117,132 @@ Instance Methods
 * add self.class.fancy_name(self.name) to fancy_name method, run test, pass
 * !!!!CALLBACKS STILL NEEDED!!!!
 
-Your first controller
-     - rails g controller users
-     talk about each of the files created, delete helpers and stuff in asset pipeline?
-     - rm app/helpers/users_helper.rb, rm test/unit/helpers/users_helper_test.rb (talk about helpers later)
-     - open users_controller and users_controller_test
-     talk about the actions we will be creating
-     index
-     - add test_get_index (without assert assigns(:users)), run test
-     - ActionController::RoutingError: No route matches {:controller=>"users"}
-     talk about routes
-     - add resources :users, :only => :index to routes
-     - rake routes (discuss paths created)
-     - run test
-     - AbstractController::ActionNotFound: The action 'index' could not be found for UsersController
-     - add empty index action to controller, run test
-     - ActionView::MissingTemplate: Missing template users/index, application/index with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]
-     - add empty file index.erb, run test, passing
-     - add assert assigns(:users) to test_index, failure
-     - add @users = User.all to index action, run test, pass
-     show
-     - add test_get_show (without assert assigns(:user)), run test
-     - ActionController::RoutingError: No route matches {:id=>"593363170", :controller=>"users", :action=>"show"}
-     - modify routes to resources :users, :only => [:index, :show]
-     - AbstractController::ActionNotFound: The action 'show' could not be found for UsersController
-     - add empty show action to the controller
-     - ActionView::MissingTemplate: Missing template users/show, application/show with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
-  * "/Users/dess-e/code/rails/dinorails/app/views"     - add empty file show.erb to controller, run test, pass
-     - add assert assigns(:user) to test_show, run test, failure
-     - add @user = User.find(params[:id]) to show action, run test, pass
-     show (failing)
-     - add test_get_show_failure
-     - ActiveRecord::RecordNotFound: Couldn't find User with id=invalid
-     - add rescue ActiveRecord::RecordNotFound to show action, without anything in the rescue block, run test
-     - test_get_show_failure(UsersControllerTest) [/Users/dess-e/code/rails/dinorails/test/functional/users_controller_test.rb:22]:
-Expected response to be a <:not_found>, but was <200>
-     - add render :not_found, :status => :not_found to rescue block, run test
-     - test_get_show_failure(UsersControllerTest):
-ActionView::MissingTemplate: Missing template users/not_found, application/not_found with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
-  * "/Users/dess-e/code/rails/dinorails/app/views"     - add empty not_found.erb, run test, pass
-     new
-     - add test_get_new without assert assigns(:user)
-     - ActionController::RoutingError: No route matches {:controller=>"users", :action=>"new"}
-     - kill the :only option of the resources route
-     - rake routes, check out all the awesome routes
-     - run test again
-     - AbstractController::ActionNotFound: The action 'new' could not be found for UsersController
-     - add empty new action to controller, run test
-     - ActionView::MissingTemplate: Missing template users/new, application/new with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
-  * "/Users/dess-e/code/rails/dinorails/app/views"     - add empty new.erb, run test, pass
-     - add assert assigns(:user), run test, failure
-     - add @user = User.new(params[:user]) to new action, run test, pass
-     edit (failing)
-     - add test_get_edit without assert assigns(:user), run test
-     - AbstractController::ActionNotFound: The action 'edit' could not be found for UsersController
-     - reminder that the routing error is no longer showing because the :only option was removed
-     - add empty edit action, run test
-     - ActionView::MissingTemplate: Missing template users/edit, application/edit with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
-  * "/Users/dess-e/code/rails/dinorails/app/views"     - add empty edit.erb, run test, pass
-     - add assert assigns(:user), run test, failure
-     - add @user = User.find(params[:id]) to edit action, run test, pass
-     - add test_get_edit_failure
-     - ActiveRecord::RecordNotFound: Couldn't find User with id=invalid
-     - add empty rescue ActiveRecord::RecordNotFound block, run test
-     - Expected response to be a <:not_found>, but was <200>
-     - add render :not_found, :status => :not_found to rescue block, run test, pass
-     two things to note here: first, there was no template missing error, because we're re-using the 404 page; second, the code for show and edit is identical, which begs for refactoring. Let's do this now. Talk about before filters
-     - add protected load_user method, and copy the code from show/edit into the new method
-     - add before_filter :load_user, :only => [:show, :edit] (talk about the :only option)
-     - admire clean code, pat self on back
-     - replace the code in show/edit with render, run controller tests again, make sure they all pass
-     again, stress tests + refactoring = <3
-     create
-     - add test_creation
-     - AbstractController::ActionNotFound: The action 'create' could not be found for UsersController
-     - add empty create action to controller, run test
-     - ActionView::MissingTemplate: Missing template users/create, application/create with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
-  * "/Users/dess-e/code/rails/dinorails/app/views"     note that in this situation, you don't need a template, because we'll be redirecting
-     - add the create method with instantiation (which we'll later refactor out to a build_user method), and without the rescue block
-     - run test, pass
-     create (failure)
-     - add test_creation_failure
-     - ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
-     - add empty rescue ActiveRecord::RecordInvalid block, run test
-     - ActionView::MissingTemplate: Missing template users/create, application/create with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
-  * "/Users/dess-e/code/rails/dinorails/app/views"
-     - add render :new to rescue block, run test, failure
-     - add flash.now[:error] = 'Failed to create user' before render :new, run test, pass
-     update
-     - add test_update
-     - AbstractController::ActionNotFound: The action 'update' could not be found for UsersController
-     - add empty update action to controller
-     - ActionView::MissingTemplate: Missing template users/update, application/update with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
-  * "/Users/dess-e/code/rails/dinorails/app/views"     - need to load the user, and redirect to the user show page, so add :update to the before filter, and redirect_to :action => :show, :id => @user to the update action, run test, failure
-     - add flash[:notice] = 'PRO updated' before the redirect, run test
-     - <"Updated User Name"> expected but was <"Default User">.
-     - add @user.update_attributes!(params[:pro]) as the first line in the update action, run test, pass
-     update (failure)
-     - add test_update_failure
-     - ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
-     - add empty rescue ActiveRecord::RecordInvalid block, run test
-     - ActionView::MissingTemplate: Missing template users/update, application/update with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
-  * "/Users/dess-e/code/rails/dinorails/app/views"
-     - need to redirect instead of adding a template, so add render :edit to the rescue block, run test, failure
-     - add flash.now[:error] = 'Failed to update User' before render in the rescue block, run test, pass
-     destroy
-     - add test_destroy
-     - AbstractController::ActionNotFound: The action 'destroy' could not be found for UsersController
-     - add empty destroy action to controller, run test
-     - ActionView::MissingTemplate: Missing template users/destroy, application/destroy with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. Searched in:
-  * "/Users/dess-e/code/rails/dinorails/app/views"     - need to load user and redirect, so add :destroy to the before filter, and redirect_to :action => :index to the update action, run test, failure
-     - add flash[:notice] = 'User deleted' before the redirect, run test
-     - "User.count" didn't change by -1. <0> expected but was <1>.
-     - add @user.destroy as the first line in the destroy action, run test, pass
+## Your first controller
+* rails g controller users
+* talk about each of the files created, delete helpers and stuff in asset pipeline?
+* rm app/helpers/users_helper.rb, rm test/unit/helpers/users_helper_test.rb (talk about helpers later)
+* open users_controller and users_controller_test
+* talk about the actions we will be creating
+
+index
+
+* add test_get_index (without assert assigns(:users)), run test
+* ActionController::RoutingError: No route matches {:controller=>"users"}
+* talk about routes
+* add resources :users, :only => :index to routes
+* rake routes (discuss paths created)
+* run test
+* AbstractController::ActionNotFound: The action 'index' could not be found for UsersController
+* add empty index action to controller, run test
+* ActionView::MissingTemplate: Missing template users/index, application/index with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}.
+* add empty file index.erb, run test, passing
+* add assert assigns(:users) to test_index, failure
+* add @users = User.all to index action, run test, pass
+
+show
+
+* add test_get_show (without assert assigns(:user)), run test
+* ActionController::RoutingError: No route matches {:id=>"593363170", :controller=>"users", :action=>"show"}
+* modify routes to resources :users, :only => [:index, :show]
+* AbstractController::ActionNotFound: The action 'show' could not be found for UsersController
+* add empty show action to the controller
+* ActionView::MissingTemplate: Missing template users/show, application/show with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}. 
+* add empty file show.erb to controller, run test, pass
+* add assert assigns(:user) to test_show, run test, failure
+* add @user = User.find(params[:id]) to show action, run test, pass
+
+show (failing)
+
+* add test_get_show_failure
+* ActiveRecord::RecordNotFound: Couldn't find User with id=invalid
+* add rescue ActiveRecord::RecordNotFound to show action, without anything in the rescue block, run test
+* Expected response to be a <:not_found>, but was <200>
+* add render :not_found, :status => :not_found to rescue block, run test
+* ActionView::MissingTemplate: Missing template users/not_found, application/not_found with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}.
+* add empty not_found.erb, run test, pass
+
+new
+
+* add test_get_new without assert assigns(:user)
+* ActionController::RoutingError: No route matches {:controller=>"users", :action=>"new"}
+* kill the :only option of the resources route
+* rake routes, check out all the awesome routes
+* run test again
+* AbstractController::ActionNotFound: The action 'new' could not be found for UsersController
+* add empty new action to controller, run test
+* ActionView::MissingTemplate: Missing template users/new, application/new with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}
+* add empty new.erb, run test, pass
+* add assert assigns(:user), run test, failure
+* add @user = User.new(params[:user]) to new action, run test, pass
+
+edit (failing)
+
+* add test_get_edit without assert assigns(:user), run test
+* AbstractController::ActionNotFound: The action 'edit' could not be found for UsersController
+* reminder that the routing error is no longer showing because the :only option was removed
+* add empty edit action, run test
+* ActionView::MissingTemplate: Missing template users/edit, application/edit with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}
+* add empty edit.erb, run test, pass
+* add assert assigns(:user), run test, failure
+* add @user = User.find(params[:id]) to edit action, run test, pass
+* add test_get_edit_failure
+* ActiveRecord::RecordNotFound: Couldn't find User with id=invalid
+* add empty rescue ActiveRecord::RecordNotFound block, run test
+* Expected response to be a <:not_found>, but was <200>
+* add render :not_found, :status => :not_found to rescue block, run test, pass
+* two things to note here: first, there was no template missing error, because we're re-using the 404 page; second, the code for show and edit is identical, which begs for refactoring. Let's do this now. Talk about before filters
+* add protected load_user method, and copy the code from show/edit into the new method
+* add before_filter :load_user, :only => [:show, :edit] (talk about the :only option)
+* admire clean code, pat self on back
+* replace the code in show/edit with render, run controller tests again, make sure they all pass
+* again, stress tests + refactoring = <3
+
+create
+
+* add test_creation
+* AbstractController::ActionNotFound: The action 'create' could not be found for UsersController
+* add empty create action to controller, run test
+* ActionView::MissingTemplate: Missing template users/create, application/create with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}
+* note that in this situation, you don't need a template, because we'll be redirecting
+* add the create method with instantiation (which we'll later refactor out to a build_user method), and without the rescue block
+* run test, pass
+
+create (failure)
+
+* add test_creation_failure
+* ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
+* add empty rescue ActiveRecord::RecordInvalid block, run test
+* ActionView::MissingTemplate: Missing template users/create, application/create with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}
+* add render :new to rescue block, run test, failure
+* add flash.now[:error] = 'Failed to create user' before render :new, run test, pass
+
+update
+
+* add test_update
+* AbstractController::ActionNotFound: The action 'update' could not be found for UsersController
+* add empty update action to controller
+* ActionView::MissingTemplate: Missing template users/update, application/update with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}.
+* need to load the user, and redirect to the user show page, so add :update to the before filter, and redirect_to :action => :show, :id => @user to the update action, run test, failure
+* add flash[:notice] = 'PRO updated' before the redirect, run test
+* <"Updated User Name"> expected but was <"Default User">.
+* add @user.update_attributes!(params[:pro]) as the first line in the update action, run test, pass
+
+update (failure)
+
+* add test_update_failure
+* ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
+* add empty rescue ActiveRecord::RecordInvalid block, run test
+* ActionView::MissingTemplate: Missing template users/update, application/update with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}.
+* need to redirect instead of adding a template, so add render :edit to the rescue block, run test, failure
+* add flash.now[:error] = 'Failed to update User' before render in the rescue block, run test, pass
+
+destroy
+
+* add test_destroy
+* AbstractController::ActionNotFound: The action 'destroy' could not be found for UsersController
+* add empty destroy action to controller, run test
+* ActionView::MissingTemplate: Missing template users/destroy, application/destroy with {:handlers=>[:erb, :builder, :haml], :formats=>[:html], :locale=>[:en, :en]}
+* need to load user and redirect, so add :destroy to the before filter, and redirect_to :action => :index to the update action, run test, failure
+* add flash[:notice] = 'User deleted' before the redirect, run test
+* "User.count" didn't change by -1. <0> expected but was <1>.
+* add @user.destroy as the first line in the destroy action, run test, pass
