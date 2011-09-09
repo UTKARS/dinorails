@@ -76,6 +76,7 @@ To start the server, run ```rails server``` in the dinorails directory, and navi
 * ActiveRecord::UnknownAttributeError: unknown attribute: name
 
 Rails Console
+
 * rails console
 * User (look at the columns on user, no name)
 * since you haven't yet committed, open migration and add t.string :name
@@ -98,6 +99,7 @@ Rails Console
 * add name to fixture, see passing test_fixtures_validity and test_destroy
 
 Class Methods
+
 * add test_self_fancy_name
 * NoMethodError: undefined method `fancy_name' for #<Class:0x00000103a80558>
 * add empty method self.fancy_name(name) under class methods heading, run test
@@ -107,12 +109,13 @@ Class Methods
 * verify that test still passes, tests + refactoring = <3
 
 Instance Methods
+
 * add test_fancy_name to tests
 * NoMethodError: undefined method `fancy_name' for #<User:0x00000101ce6010>
-     - add empty fancy_name method to model, run test
-     - <"Dinosaur Owner Default User"> expected but was <nil>.
-     - add self.class.fancy_name(self.name) to fancy_name method, run test, pass
-     - !!!!CALLBACKS STILL NEEDED!!!!
+* add empty fancy_name method to model, run test
+* <"Dinosaur Owner Default User"> expected but was <nil>.
+* add self.class.fancy_name(self.name) to fancy_name method, run test, pass
+* !!!!CALLBACKS STILL NEEDED!!!!
 
 Your first controller
      - rails g controller users
