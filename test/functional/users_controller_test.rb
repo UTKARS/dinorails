@@ -62,4 +62,28 @@ class UsersControllerTest < ActionController::TestCase
     end
   end
 
+  def test_update
+    user = users(:default)
+    put :update, :id => user, :user => {
+      :name => 'Updated User Name'
+    }
+    assert_response :redirect
+    assert_redirected_to :action => :show, :id => user
+    assert flash[:notice]
+    user.reload
+    assert_equal 'Updated User Name', user.name
+  end
+  
+  def test_update_failure
+    user = users(:default)
+    put :update, :id => user, :user => {
+      :name => nil
+    }
+    assert_response :success
+    assert_template :edit
+    assert flash[:error]
+    user.reload
+    assert_not_nil user.name
+  end
+  
 end
