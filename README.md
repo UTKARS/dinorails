@@ -50,14 +50,7 @@ hit enter
 type yes
 ```
 
-Then try 
-
-```
-ruby -v
-rails -v
-```
-
-and notice that they are the version specified in rvmrc and Gemfile, respectively
+Then try ```ruby -v``` and ```rails -v```, and notice that they are the version specified in rvmrc and Gemfile, respectively.
 
 explanation of rvm, ruby version, etc
 
