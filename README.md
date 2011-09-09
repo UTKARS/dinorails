@@ -67,45 +67,45 @@ To start the server, run ```rails server``` in the dinorails directory, and navi
 
 ## Your first model
 * ```rails generate model user```
-* (talk about each of the files created)
+* talk about each of the files created
 * open user.rb and user_test.rb
 * add test_creation test, run test
-     - ActiveRecord::StatementInvalid: Could not find table 'users'
-     - rake db:migrate, run test, same error
-     - rake db:test:prepare, run test
-     - ActiveRecord::UnknownAttributeError: unknown attribute: name
-     introduce rails console
-     - rails console
-     - User (look at the columns on user, no name)
-     - since you haven't yet committed, open migration and add t.string :name
-     -  rake:db:redo, rake db:test:prepare
-     - passing test, yay!
-     - rails console
-     - User (look at the columns on user, name, awesome)
-     good time to commit, reminder to always run rake before committing
-     - mate .gitignore, add .rvmrc to gitignore
-     - git status; git add .; git commit -m 'Add user model'; git push
-     back to model, add validation
-     - want to make sure the user always has a name
-     - add test_validations, run test, failure!
-     - add validates_presence_of :name to model under the validations section (talk about partitioning our models into sections)
-     - run test, NoMethodError: undefined method `assert_errors_on' for #<UserTest:0x00000100cc7d00>
-     - add assert_errors_on to test_helper
-     - run test, pass, yay again
-     - add test_destroy StandardError: No fixture with name 'default' found for table 'users'
-     - set up fixture without a name, write failing test_fixtures_validity
-     - add name to fixture, see passing test_fixtures_validity and test_destroy
-     class methods
-     - add test_self_fancy_name
-     - NoMethodError: undefined method `fancy_name' for #<Class:0x00000103a80558>
-     - add empty method self.fancy_name(name) under class methods heading, run test
-     - <"Dinosaur Owner This is my awesome name"> expected but was <nil>.
-     - add "Dinosaur Owner #{name}" inside self.fancy_name, run test, pass
-     - refactor by creating a constant PREFIX = 'Dinosaur owner', and using the constant within self.fancy_name
-     - verify that test still passes, tests + refactoring = <3
-     instance methods
-     - add test_fancy_name to tests
-     - NoMethodError: undefined method `fancy_name' for #<User:0x00000101ce6010>
+* ActiveRecord::StatementInvalid: Could not find table 'users'
+* rake db:migrate, run test, same error
+* rake db:test:prepare, run test
+* ActiveRecord::UnknownAttributeError: unknown attribute: name
+### Rails Console
+* rails console
+* User (look at the columns on user, no name)
+* since you haven't yet committed, open migration and add t.string :name
+* rake:db:redo, rake db:test:prepare
+* passing test, yay!
+* rails console
+* User (look at the columns on user, name, awesome)
+* good time to commit, reminder to always run rake before committing
+* mate .gitignore, add .rvmrc to gitignore
+* git status; git add .; git commit -m 'Add user model'; git push
+* back to model, add validation
+* want to make sure the user always has a name
+* add test_validations, run test, failure!
+* add validates_presence_of :name to model under the validations section (talk about partitioning our models into sections)
+* run test, NoMethodError: undefined method `assert_errors_on' for #<UserTest:0x00000100cc7d00>
+* add assert_errors_on to test_helper
+* run test, pass, yay again
+* add test_destroy StandardError: No fixture with name 'default' found for table 'users'
+* set up fixture without a name, write failing test_fixtures_validity
+* add name to fixture, see passing test_fixtures_validity and test_destroy
+### Class Methods
+* add test_self_fancy_name
+* NoMethodError: undefined method `fancy_name' for #<Class:0x00000103a80558>
+* add empty method self.fancy_name(name) under class methods heading, run test
+* <"Dinosaur Owner This is my awesome name"> expected but was <nil>.
+* add "Dinosaur Owner #{name}" inside self.fancy_name, run test, pass
+* refactor by creating a constant PREFIX = 'Dinosaur owner', and using the constant within self.fancy_name
+* verify that test still passes, tests + refactoring = <3
+### Instance Methods
+* add test_fancy_name to tests
+* NoMethodError: undefined method `fancy_name' for #<User:0x00000101ce6010>
      - add empty fancy_name method to model, run test
      - <"Dinosaur Owner Default User"> expected but was <nil>.
      - add self.class.fancy_name(self.name) to fancy_name method, run test, pass
