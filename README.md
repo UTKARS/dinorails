@@ -41,13 +41,25 @@ rvm wrapper "$environment_id" textmate
 echo $MY_RUBY_HOME
 ```
 
+In order to activate the correct ruby version, do the following:
 
-     - cd ../
-     - cd dinorails
-     - hit enter
-     - type yes
-     - ruby -v, rails -v, and notice that they are the version specified in rvmrc and Gemfile, respectively
-     explanation of rvm, ruby version, etc
+```
+cd ../
+cd dinorails
+hit enter
+type yes
+```
+
+Then try 
+
+```
+ruby -v
+rails -v
+```
+
+and notice that they are the version specified in rvmrc and Gemfile, respectively
+
+explanation of rvm, ruby version, etc
 
 Bundler
      - gem install bundler (because that gem set will not have it)
