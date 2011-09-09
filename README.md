@@ -74,6 +74,7 @@ To start the server, run ```rails server``` in the dinorails directory, and navi
 * rake db:migrate, run test, same error
 * rake db:test:prepare, run test
 * ActiveRecord::UnknownAttributeError: unknown attribute: name
+
 Rails Console
 * rails console
 * User (look at the columns on user, no name)
@@ -95,6 +96,7 @@ Rails Console
 * add test_destroy StandardError: No fixture with name 'default' found for table 'users'
 * set up fixture without a name, write failing test_fixtures_validity
 * add name to fixture, see passing test_fixtures_validity and test_destroy
+
 Class Methods
 * add test_self_fancy_name
 * NoMethodError: undefined method `fancy_name' for #<Class:0x00000103a80558>
@@ -103,6 +105,7 @@ Class Methods
 * add "Dinosaur Owner #{name}" inside self.fancy_name, run test, pass
 * refactor by creating a constant PREFIX = 'Dinosaur owner', and using the constant within self.fancy_name
 * verify that test still passes, tests + refactoring = <3
+
 Instance Methods
 * add test_fancy_name to tests
 * NoMethodError: undefined method `fancy_name' for #<User:0x00000101ce6010>
