@@ -90,7 +90,7 @@ Rails Console
 * back to model, add validation
 * want to make sure the user always has a name
 * add test_validations, run test, failure!
-* add validates_presence_of :name to model under the validations section (talk about partitioning our models into sections)
+* add validates :name, :presence => true to model under the validations section (talk about partitioning our models into sections)
 * run test, NoMethodError: undefined method `assert_errors_on' for #<UserTest:0x00000100cc7d00>
 * add assert_errors_on to test_helper
 * run test, pass, yay again

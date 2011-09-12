@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   PREFIX = 'Dinosaur Owner'
 
   # -- Validations ----------------------------------------------------------
-  validates_presence_of :name
+  validates :name, :presence => true
 
   # -- Class Methods --------------------------------------------------------
   def self.fancy_name(name)

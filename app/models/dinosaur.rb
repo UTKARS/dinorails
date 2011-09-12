@@ -4,7 +4,7 @@ class Dinosaur < ActiveRecord::Base
   COLOURS = %w(red blue green magenta)
   
   # -- Validations ----------------------------------------------------------
-  validates_presence_of :name
+  validates :name, :presence => true
   validates :colour, :inclusion => COLOURS
   
 end
