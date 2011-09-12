@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 
+  # -- Constants ------------------------------------------------------------
   PREFIX = 'Dinosaur Owner'
 
   # -- Validations ----------------------------------------------------------
